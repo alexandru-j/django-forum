@@ -1,0 +1,7 @@
+{% load crispy_forms_tags %}
+
+<form action="{% url 'post-update' post_id %}" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-primary" style="float: right" type="submit">Modifica</button>
+</form>

@@ -1,0 +1,116 @@
+{% extends "_base.html" %}
+
+{% load humanize %}
+
+<!-- Title -->
+{% block title %}{{ post.title }} postat de {{ post.author }} - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'forum-list' %}">
+		    Forum
+		</a>
+	    </li>
+	    <li class="breadcrumb-item">
+		<a href="{{ post.forum.get_absolute_url }}">
+		    {{ post.forum.name }}
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="card d-flex flex-row mt-4">
+	<div class="p-4 bg-body-tertiary" style="max-width: 150px">
+	    <div class="d-flex flex-column">
+		<img src=https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-color-icon.png" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 100px; z-index: 1">
+	    </div>
+	    <div class="text-center">
+		<p>
+		    <a href="{{ post.author.get_absolute_url}}">
+			{{ post.author.profile.display_name }}
+		    </a>
+		</p>
+	    </div>
+	</div>
+	<div class="flex-fill p-3">
+	    <h3>{{ post.title }}</h3>
+	    <p>{{ post.content }}</p>
+	    <div class="d-flex">
+		<p class="text-muted">
+		    Postat {{ post.created_at|naturaltime }}
+		    {% if post.created_at|naturaltime != post.updated_at|naturaltime %}
+			(Modificat {{ post.updated_at|naturaltime }})
+		    {% endif %}
+		</p>
+		{% if post.author == request.user %}
+		    <div class="flex-fill" style="text-align: right">
+			<a href="{% url 'post-update' post.pk %}">Modifica</a>
+			<a class="text-danger" href="{% url 'post-delete' post.pk %}">Sterge</a>
+		    </div>
+		{% endif %}
+	    </div>
+	</div>
+    </div>
+    <div class="mt-4">
+	{% if page_obj %}
+	    <h3>Comentarii</h3>
+	    {% include "includes/pagination.html" %}
+	    {% for comment in page_obj %}
+		<div class="card d-flex flex-row mb-3">
+		    <div class="p-4 bg-body-tertiary" style="max-width: 130px">
+			<div class="d-flex flex-column">
+			    <img src=https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-color-icon.png" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 100px; z-index: 1">
+			</div>
+			<div class="text-center">
+			    <p>
+				<a href="{{ comment.author.get_absolute_url}}">
+				    {{ comment.author.profile.display_name }}
+				</a>
+			    </p>
+			</div>
+		    </div>
+		    <div class="flex-fill p-3">
+			<p>{{ comment.message }}</p>
+			<div class="d-flex">
+			    <p class="text-muted">
+				Postat {{ comment.created_at|naturaltime }}
+				{% if comment.created_at|naturaltime != comment.updated_at|naturaltime %}
+				    (Modificat {{ comment.updated_at|naturaltime }})
+				{% endif %}
+			    </p>
+			    {% if comment.author == request.user %}
+				<div class="flex-fill" style="text-align: right">
+				    <a href="{% url 'comment-update' comment.pk %}">Modifica</a>
+				    <a class="text-danger" href="{% url 'comment-delete' comment.pk %}">Sterge</a>
+				</div>
+			    {% endif %}
+			</div>
+		    </div>
+		</div>
+	    {% endfor %}
+	    {% include "includes/pagination.html" %}
+	{% endif %}
+	{% if user.is_authenticated %}
+	    <div class="card d-flex flex-row">
+		<div class="p-4 bg-body-tertiary" style="max-width: 130px">
+		    <div class="d-flex flex-column">
+			<img src=https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-color-icon.png" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 100px; z-index: 1">
+			<div class="text-center">
+			    <p>{{ request.user.profile.display_name }}</p>
+			</div>
+		    </div>
+		</div>
+		<div class="p-3 flex-fill">
+		    {% include "comments/_create_form.html" with post_id=post.pk %}
+		</div>
+	    </div>
+	{% endif %}
+    </div>
+{% endblock %}

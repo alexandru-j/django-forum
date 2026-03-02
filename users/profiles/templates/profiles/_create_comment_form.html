@@ -1,0 +1,8 @@
+<form action="{% url 'profilecomment-create' profile_id %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+	<label class="form-label" for="id_content">Scrie un comentariu ...</label>
+	<textarea class="form-control" name="message" cols="40" rows="10" maxlength="1200" required id="id_message"></textarea>
+    </div>
+    <button class="btn btn-primary" style="float: right" type="submit">Posteaza</button>
+</form>

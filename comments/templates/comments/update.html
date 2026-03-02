@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+<!-- Title -->
+{% block title %}Modifica Comentariu - Forum{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="card mt-4 d-flex" style="max-width: 800px; margin: 0 auto">
+	<div class="card-body">
+	    <h1>Modifica comentariul din "{{ comment.post.title }}" din "{{ comment.post.forum.name }}"</h1>
+	    {% include "comments/_update_form.html" with comment_id=comment.pk %}
+	</div>
+    </div>
+{% endblock %}

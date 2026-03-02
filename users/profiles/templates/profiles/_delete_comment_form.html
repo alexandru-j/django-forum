@@ -1,0 +1,6 @@
+{% load crispy_forms_tags %}
+
+<form action="{% url 'profilecomment-delete' comment_id %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-danger" style="float: right" type="submit">Sterge</button>
+</form>

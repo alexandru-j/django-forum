@@ -1,0 +1,158 @@
+{% extends "_base.html" %}
+
+{% load humanize %}
+
+<!-- Title -->
+{% block title %}Activitate {{ profile.display_name }} - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'forum-list' %}">
+		    Forum
+		</a>
+	    </li>
+	    <li class="breadcrumb-item">
+		<a href="{% url 'profile-list' %}">
+		    Membri
+		</a>
+	    </li>
+	    <li class="breadcrumb-item">
+		<a href="{{ profile.get_absolute_url }}">
+		    {{ profile.user.username }}
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active">
+		Activitate
+	    </li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="row d-flex justify-content-center">
+	<div class="col col-lg-9 col-xl-8">
+	    <div class="card">
+		<div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+		    <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+			<img src=https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-color-icon.png" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+		    </div>
+		    <div class="ms-3" style="margin-top: 130px;">
+			<h5>{{ profile.display_name }}</h5>
+			<p class="fw-bold">
+			    {% if profile.user.is_superuser %}
+				ADMINISTRATOR
+			    {% elif profile.user.is_staff %}
+				MODERATOR
+			    {% else %}
+				MEMBRU
+			    {% endif%}
+			</p>
+		    </div>
+		</div>
+		<div class="p-4 text-black bg-body-tertiary">
+		    <div class="d-flex text-center py-1 text-body">
+			<div class="flex-fill">
+			    <p class="mb-1 h5">{{ profile.post_count }}</p>
+			    <p class="small text-muted mb-0">Postari</p>
+			</div>
+			<div class="flex-fill">
+			    <p class="mb-1 h5">{{ profile.comment_count }}</p>
+			    <p class="small text-muted mb-0">Comentarii</p>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    {% if page_obj %}
+		<div class="mt-4">
+		    <h3>Activitate</h3>
+		    {% include "includes/pagination.html" %}
+		    {% for activity in page_obj %}
+			{% if activity.content_object.title %}
+			    <!-- Post -->
+			    <div class="card d-flex flex-row mb-3">
+				<div class="p-4 bg-body-tertiary" style="max-width: 130px">
+				    <div class="d-flex flex-column">
+					<img src=https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-color-icon.png" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 100px; z-index: 1">
+				    </div>
+				    <div class="text-center">
+					<p>
+					    <a href="{{ activity.author.get_absolute_url}}">
+						{{ activity.author.profile.display_name }}
+					    </a>
+					</p>
+				    </div>
+				</div>
+				<div class="flex-fill p-3">
+				    <h5>{{ activity.content_object.title }}</h5>
+				    <p>{{ activity.content_object.content }}</p>
+				    <div class="d-flex">
+					<p class="text-muted">
+					    Postat {{ activity.content_object.created_at|naturaltime }}
+					    {% if activity.content_object.created_at|naturaltime != activity.content_object.updated_at|naturaltime %}
+						(Modificat {{ activity.content_object.updated_at|naturaltime }})
+					    {% endif %}
+					    in
+					    <a href="{{ activity.content_object.forum.get_absolute_url }}">
+						{{ activity.content_object.forum.name }}
+					    </a>
+					</p>
+					<div class="flex-fill" style="text-align: right">
+					    <a href="{{ activity.content_object.get_absolute_url }}">Vezi postarea</a>
+					</div>
+				    </div>
+				</div>
+			    </div>
+			    <!-- End Post -->
+			{% else %}
+			    <!-- Comment -->
+			    <div class="card d-flex flex-row mb-3">
+				<div class="p-4 bg-body-tertiary" style="max-width: 130px">
+				    <div class="d-flex flex-column">
+					<img src=https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-color-icon.png" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 100px; z-index: 1">
+				    </div>
+				    <div class="text-center">
+					<p>
+					    <a href="{{ activity.author.get_absolute_url}}">
+						{{ activity.author.profile.display_name }}
+					    </a>
+					</p>
+				    </div>
+				</div>
+				<div class="flex-fill p-3">
+				    <p>{{ activity.content_object.message }}</p>
+				    <div class="d-flex">
+					<p class="text-muted">
+					    Postat {{ activity.content_object.created_at|naturaltime }}
+					    {% if activity.content_object.created_at|naturaltime != activity.content_object.updated_at|naturaltime %}
+						(Modificat {{ activity.content_object.updated_at|naturaltime }})
+					    {% endif %}
+					    in
+					    {% if activity.content_object.post %}
+						<a href="{{ activity.content_object.post.get_absolute_url }}">
+						    {{ activity.content_object.post.title }}
+						</a>
+					    {% else %}
+						<a href="{{ activity.content_object.get_absolute_url }}">
+						    {{ activity.content_object.profile.user }}
+						</a>
+					    {% endif %}
+					</p>
+					<div class="flex-fill" style="text-align: right">
+					    <a href="{{ activity.content_object.get_absolute_url }}">Vezi comentariul</a>
+					</div>
+				    </div>
+				</div>
+			    </div>
+			    <!-- End Comment -->
+			{% endif %}
+		    {% endfor %}
+		    {% include "includes/pagination.html" %}
+		</div>
+	    {% endif %}
+	</div>
+    </div>
+{% endblock %}

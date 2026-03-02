@@ -1,0 +1,65 @@
+{% extends "_base.html" %}
+
+<!-- Title -->
+{% block title %}Postari recente - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'forum-list' %}">
+		    Forum
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active">
+		Postari recente
+	    </li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Conntent -->
+{% block content %}
+    <h3 class="mt-4">Postari recente</h3>
+    {% if page_obj %}
+	{% include "includes/pagination.html" %}
+	<table class="table table-striped mt-2">
+	    <thead>
+		<tr>
+		    <th scope="col">Titlu</th>
+		    <th scope="col">Autor</th>
+		    <th scope="col">Forum</th>
+		    <th scope="col">Comentarii</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for post in page_obj %}
+		    <tr>
+			<td>
+			    <a href="{{ post.get_absolute_url }}">
+				{{ post.title }}
+			    </a>
+			</td>
+			<td>
+			    <a href="{{ post.author.get_absolute_url }}">
+				{{ post.author }}
+			    </a>
+			</td>
+			<td>
+			    <a href="{{ post.forum.get_absolute_url }}">
+				{{ post.forum.name }}
+			    </a>
+			</td>
+			<td>
+			    {{ post.comment_count }}
+			</td>
+		    </tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+	{% include "includes/pagination.html" %}
+    {% else %}
+	<p>Nu exista postari momentan!</p>
+    {% endif %}
+{% endblock %}

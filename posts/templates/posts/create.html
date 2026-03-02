@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+
+<!-- Title -->
+{% block title %}Posteaza - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'forum-list' %}">
+		    Forum
+		</a>
+	    </li>
+	    <li class="breadcrumb-item">
+		<a href="{{ forum.get_absolute_url }}">
+		    {{ forum.name }}
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active" aria-current="page">Postare noua<li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="card mt-4 d-flex" style="max-width: 800px; margin: 0 auto">
+	<div class="card-body">
+	    <h1>Postare noua in "{{ forum.name }}"</h1>
+	    {% include "posts/_create_form.html" with forum_id=forum.pk %}
+	</div>
+    </div>
+{% endblock %}

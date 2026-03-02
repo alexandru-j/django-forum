@@ -1,0 +1,62 @@
+{% extends "_base.html" %}
+
+{% load humanize %}
+
+<!-- Title -->
+{% block title %}Membri - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'forum-list' %}">
+		    Forum
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active">
+		Membri
+	    </li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Conntent -->
+{% block content %}
+    <h3 class="mt-4">Membri</h3>
+    {% if page_obj %}
+	<table class="table table-striped mt-2">
+	    <thead>
+		<tr>
+		    <th scope="col">Nume</th>
+		    <th scope="col">Postari</th>
+		    <th scope="col">Comentarii</th>
+		    <th scope="col">Cont Creat</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for profile in page_obj %}
+		    <tr>
+			<td>
+			    <a href="{{ profile.get_absolute_url }}">
+				{{ profile.display_name }}
+			    </a>
+			</td>
+			<td>
+			    {{ profile.post_count }}
+			</td>
+			<td>
+			    {{ profile.comment_count }}
+			</td>
+			<td>
+			    {{ profile.user.date_joined|naturaltime }}
+			</td>
+		    </tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+	{% include "includes/pagination.html" %}
+    {% else %}
+	<p>Nu exista membri momentan!</p>
+    {% endif %}
+{% endblock %}

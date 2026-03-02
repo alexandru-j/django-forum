@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+
+<!-- Title -->
+{% block title %}Modifica Postare - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'forum-list' %}">
+		    Forum
+		</a>
+	    </li>
+	    <li class="breadcrumb-item">
+		<a href="{{ post.forum.get_absolute_url }}">
+		    {{ post.forum.name }}
+		</a>
+	    </li>
+	    <li class="breadcrumb-item">
+		<a href="{{ post.get_absolute_url }}">
+		    {{ post.title }}
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active" aria-current="page">Modifica</li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="card mt-4 d-flex" style="max-width: 800px; margin: 0 auto">
+	<div class="card-body">
+	    <h1>Modifica postarea "{{ post.title }}" din "{{ post.forum.name }}"</h1>
+	    {% include "posts/_update_form.html" with post_id=post.pk %}
+	</div>
+    </div>
+{% endblock %}

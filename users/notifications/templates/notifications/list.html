@@ -1,0 +1,72 @@
+{% extends "_base.html" %}
+
+{% load humanize %}
+
+<!-- Title -->
+{% block title %}Notificari - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'account-update' %}">
+		    Cont
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active">
+		Notificari
+	    </li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Conntent -->
+{% block content %}
+    <h3 class="mt-4">Notificari</h3>
+    {% if page_obj %}
+	{% include "includes/pagination.html" %}
+	<table class="table table-striped mt-2">
+	    <thead>
+		<tr>
+		    <th scope="col">Tip notificare</th>
+		    <th scope="col">Mesaj</th>
+		    <th scope="col">Citit</th>
+		    <th scope="col">Creat</th>
+		    <th></th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for notification in page_obj %}
+		    <tr>
+			<td>
+			    {{ notification.tag }}
+			</td>
+			<td>
+			    {{ notification.message|safe }}
+			</td>
+			<td>
+			    {% if notification.read %}
+				Da
+			    {% else %}
+				Nu
+			    {% endif %}
+			</td>
+			<td>
+			    {{ notification.created_at|naturaltime }}
+			</td>
+			<td class="d-flex gap-2">
+			    {% if not notification.read %}
+				{% include "notifications/_read_form.html" with notification_id=notification.pk %}
+			    {% endif %}
+			    {% include "notifications/_delete_form.html" with notification_id=notification.pk %}
+			</td>
+		    </tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+	{% include "includes/pagination.html" %}
+    {% else %}
+	<p>Nu ai notificari momentan!</p>
+    {% endif %}
+{% endblock %}

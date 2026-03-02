@@ -1,0 +1,13 @@
+{% load crispy_forms_tags %}
+
+<form action="{% url 'profile-update' %}" method="POST">
+    {% csrf_token %}
+    <div id="div_id_display_name" class="mb-3">
+	<label for="id_display_name" class="form-label requiredField">
+	    Nume profil<span class="asteriskField">*</span>
+	</label>
+	<input type="text" name="display_name" value="test" maxlength="32" class="textinput form-control" required id="id_display_name">
+    </div>
+    <button class="btn btn-primary" style="float: right">Salveaza</button>
+</form>
+

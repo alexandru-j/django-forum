@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+
+<!-- Title -->
+{% block title %}Cont - Forum{% endblock %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item active">
+		Cont
+	    </li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Conntent -->
+{% block content %}
+    <div class="card mt-4">
+	<div class="card-body">
+	    <h3>Cont</h3>
+	    {% include "accounts/_update_form.html" %}
+	    <a href="{% url 'account-change-password' %}">Schimba parola</a>
+	</div>
+    </div>
+    <div class="card mt-4">
+	<div class="card-body">
+	    <h3>Profil</h3>
+	    {% include "profiles/_update_form.html" %}
+	</div>
+    </div>
+{% endblock %}

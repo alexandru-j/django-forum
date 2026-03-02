@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+<!-- Title -->
+{% block title %}Sterge Comentariu - Forum{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="card mt-4 d-flex" style="max-width: 800px; margin: 0 auto">
+	<div class="card-body">
+	    <h1>Esti sigur ca vrei sa stergi comentariul "{{ comment.message }}" de pe profilul "{{ comment.profile.display_name }}"?</h1>
+	    {% include "profiles/_delete_comment_form.html" with comment_id=comment.pk %}
+	</div>
+    </div>
+{% endblock %}

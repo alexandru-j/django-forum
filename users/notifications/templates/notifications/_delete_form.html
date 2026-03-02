@@ -1,0 +1,8 @@
+{% load crispy_forms_tags %}
+
+<form action="{% url 'notification-delete' notification_id %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">
+	<i class="fa-solid fa-trash-can" title="Sterge notificarea"></i>
+    </button>
+</form>

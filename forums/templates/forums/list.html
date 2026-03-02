@@ -1,0 +1,37 @@
+{% extends "_base.html" %}
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item active" aria-current="page">Forum</li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Conntent -->
+{% block content %}
+    <h3 class="mt-4">Forumuri</h3>
+    <table class="table table-striped mt-2">
+	<thead>
+	    <tr>
+		<th scope="col">Forum</th>
+		<th scope="col">Postari</th>
+	    </tr>
+	</thead>
+	<tbody>
+	    {% for forum in forums %}
+		<tr>
+		    <td>
+			<a href="{{ forum.get_absolute_url }}">
+			    {{ forum.name }}
+			</a>
+		    </td>
+		    <td>
+			{{ forum.post_count }}
+		    </td>
+		</tr>
+	    {% endfor %}
+	</tbody>
+    </table>
+{% endblock %}

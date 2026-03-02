@@ -1,0 +1,66 @@
+{% extends "_base.html" %}
+
+<!-- Title -->
+{% block title %}{{ forum.name }} - Forum{% endblock %}
+
+
+<!-- Breadcrumbs -->
+{% block breadcrumbs %}
+    <nav class="mt-4" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+		<a href="{% url 'forum-list' %}">
+		    Forum
+		</a>
+	    </li>
+	    <li class="breadcrumb-item active" aria-current="page">{{ forum.name }}</li>
+	</ol>
+    </nav>
+{% endblock %}
+
+<!-- Conntent -->
+{% block content %}
+    <h3 class="mt-4">{{ forum.name }}</h3>
+    {% if forum.description %}
+	<h5>{{ forum.description }}</h5>
+    {% endif %}
+    {% if user.is_authenticated %}
+	<a class="btn btn-primary mb-1" style="float: right;" href="{% url 'post-create' forum.pk %}">
+	    Postare Noua
+	</a>
+    {% endif %}
+    {% if page_obj %}
+	{% include "includes/pagination.html" %}
+	<table class="table table-striped mt-2">
+	    <thead>
+		<tr>
+		    <th scope="col">Titlu</th>
+		    <th scope="col">Autor</th>
+		    <th scope="col">Comentarii</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for post in page_obj %}
+		    <tr>
+			<td>
+			    <a href="{{ post.get_absolute_url }}">
+				{{ post.title }}
+			    </a>
+			</td>
+			<td>
+			    <a href="{{ post.author.get_absolute_url }}">
+				{{ post.author }}
+			    </a>
+			</td>
+			<td>
+			    {{ post.comment_count }}
+			</td>
+		    </tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+	{% include "includes/pagination.html" %}
+    {% else %}
+	<p>Nu exista postari momentan!</p>
+    {% endif %}
+{% endblock %}

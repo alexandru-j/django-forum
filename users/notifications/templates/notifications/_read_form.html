@@ -1,0 +1,8 @@
+{% load crispy_forms_tags %}
+
+<form action="{% url 'notification-read' notification_id %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-primary" type="submit">
+	<i class="fa-solid fa-check" title="Marcheaza ca si citit"></i>
+    </button>
+</form>

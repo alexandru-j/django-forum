@@ -1,0 +1,14 @@
+{% extends "_core_base.html" %}
+
+<!-- Title -->
+{% block title %}Register - Forum{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="card display-flex mt-5" style="margin: 0 auto; max-width: 700px">
+	<div class="card-body">
+	    <h1 class="text-center">Inregistrare</h1>
+	    {% include "auth/_register_form.html" %}
+	</div>
+    </div>
+{% endblock %}
