@@ -26,5 +26,5 @@ def on_create_comment(sender, instance, created, **kwargs):
             )
 
 @receiver(pre_delete, sender=ProfileComment)
-def on_delete_comment(sender, instance, created, **kwargs):
-    Activity.objects.get(object_id=instance.pk).delete()
+def on_delete_comment(sender, instance, **kwargs):
+    Activity.objects.get(content_type=ContentType.objects.get_for_model(instance),object_id=instance.pk).delete()

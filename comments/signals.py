@@ -47,4 +47,4 @@ def on_delete_comment(sender, instance, **kwargs):
         except Exception as e:
             print(f"Something went wrong while updating the post count: {e}")
 
-    Activity.objects.get(object_id=instance.pk).delete()
+    Activity.objects.get(content_type=ContentType.objects.get_for_model(instance),object_id=instance.pk).delete()
