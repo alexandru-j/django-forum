@@ -57,6 +57,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_absolute_url(self):
         return reverse("profile-detail", kwargs={"pk": self.pk})
 
-    def has_notifications(self):
+    def count_notifications(self):
         from users.notifications.models import Notification
         return Notification.objects.filter(user=self, read=False).count()

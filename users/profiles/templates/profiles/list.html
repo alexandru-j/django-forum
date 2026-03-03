@@ -29,6 +29,7 @@
 	    <thead>
 		<tr>
 		    <th scope="col">Nume</th>
+		    <th scope="col">Nume de utilizator</th>
 		    <th scope="col">Postari</th>
 		    <th scope="col">Comentarii</th>
 		    <th scope="col">Cont Creat</th>
@@ -40,6 +41,11 @@
 			<td>
 			    <a href="{{ profile.get_absolute_url }}">
 				{{ profile.display_name }}
+			    </a>
+			</td>
+			<td>
+			    <a href="{{ profile.get_absolute_url }}">
+				{{ profile.user }}
 			    </a>
 			</td>
 			<td>

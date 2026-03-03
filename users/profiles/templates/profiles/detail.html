@@ -182,8 +182,12 @@
 				    </p>
 				    {% if comment.author == request.user %}
 					<div class="flex-fill" style="text-align: right">
-					    <a href="{% url 'profilecomment-update' comment.pk %}">Modifica</a>
-					    <a class="text-danger" href="{% url 'profilecomment-delete' comment.pk %}">Sterge</a>
+					    <a href="{% url 'profilecomment-update' comment.pk %}">
+						<i class="fa-solid fa-pen-to-square" title="Modifica comentariul"></i>
+					    </a>
+					    <a class="text-danger" href="{% url 'profilecomment-delete' comment.pk %}">
+						<i class="fa-solid fa-trash" title="Sterge comentariul"></i>
+					    </a>
 					</div>
 				    {% endif %}
 				</div>

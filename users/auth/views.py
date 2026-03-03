@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import (
     get_user_model,
-    logout as auth_logout
+    logout as auth_logout,
+    login as auth_login
 )
 from django.contrib.auth.views import (
     RedirectURLMixin,
@@ -22,9 +23,10 @@ class LoginView(BaseLoginView):
     template_name = "auth/login.html"
     redirect_authenticated_user = True
 
+
 class LogoutView(BaseLogoutView):
     def post(self, request, *args, **kwargs):
-        messages.add_message(request, messages.INFO, "Ai fost deconectat cu success!")
+        messages.add_message(request, messages.INFO, "Te-ai deconectat cu success!")
         return super().post(request, *args, **kwargs)
 
 
@@ -57,4 +59,6 @@ class RegisterView(RedirectURLMixin, FormView):
         )
         user.set_password(form.cleaned_data["password1"])
         user.save()
+        auth_login(self.request, user) # Login dupa register
+        messages.add_message(self.request, messages.SUCCESS, "Te-ai inregistrat cu success!")
         return super().form_valid(form)

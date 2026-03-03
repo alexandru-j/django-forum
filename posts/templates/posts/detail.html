@@ -51,8 +51,12 @@
 		</p>
 		{% if post.author == request.user %}
 		    <div class="flex-fill" style="text-align: right">
-			<a href="{% url 'post-update' post.pk %}">Modifica</a>
-			<a class="text-danger" href="{% url 'post-delete' post.pk %}">Sterge</a>
+			<a href="{% url 'post-update' post.pk %}">
+			    <i class="fa-solid fa-pen-to-square" title="Modifica postarea"></i>
+			</a>
+			<a class="text-danger" href="{% url 'post-delete' post.pk %}">
+			    <i class="fa-solid fa-trash" title="Sterge Postarea"></i>
+			</a>
 		    </div>
 		{% endif %}
 	    </div>
@@ -87,8 +91,12 @@
 			    </p>
 			    {% if comment.author == request.user %}
 				<div class="flex-fill" style="text-align: right">
-				    <a href="{% url 'comment-update' comment.pk %}">Modifica</a>
-				    <a class="text-danger" href="{% url 'comment-delete' comment.pk %}">Sterge</a>
+				    <a href="{% url 'comment-update' comment.pk %}">
+					<i class="fa-solid fa-pen-to-square" title="Modifica comentariul"></i>
+				    </a>
+				    <a class="text-danger" href="{% url 'comment-delete' comment.pk %}">
+					<i class="fa-solid fa-trash" title="Sterge comentariul"></i>
+				    </a>
 				</div>
 			    {% endif %}
 			</div>
